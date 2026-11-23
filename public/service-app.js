@@ -1,4 +1,4 @@
-import { calculate, formatMonth, formatNumber, formatPercent, marketsFor, qualityIssues, ratio, slaCard } from './service-metrics.js';
+import { calculate, formatMonth, formatNumber, formatPercent, getStatusColor, marketsFor, qualityIssues, ratio, slaCard } from './service-metrics.js';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -84,11 +84,23 @@ function render() {
   }
   const cards = [
     slaCard(view, data.coordinatorCutoff),
-    { label: 'Requests completed', value: view.complete ? formatNumber(view.totals.completed) : 'Unavailable', detail: view.complete && view.targets && view.totals.completed !== null ? goalProgress(view.totals.completed, view.targets.completed) : view.complete && view.targets && view.totals.completed === null ? 'Completed requests unavailable' : 'Annual goal unavailable' },
-    { label: 'Requests assigned', value: view.complete ? formatNumber(view.totals.assigned) : 'Unavailable', detail: 'Coordinator YTD assignments' },
-    { label: 'Site visits', value: view.complete ? formatNumber(view.totals.visits) : 'Unavailable', detail: view.complete && view.targets ? goalProgress(view.totals.visits, view.targets.visits) : 'Annual goal unavailable' }
+    { label: 'Requests completed', value: view.complete ? formatNumber(view.totals.completed) : 'Unavailable', detail: view.complete && view.targets && view.totals.completed !== null ? goalProgress(view.totals.completed, view.targets.completed) : view.complete && view.targets && view.totals.completed === null ? 'Completed requests unavailable' : 'Annual goal unavailable', metric: 'completed' },
+    { label: 'Requests assigned', value: view.complete ? formatNumber(view.totals.assigned) : 'Unavailable', detail: 'Coordinator YTD assignments', metric: 'assigned' },
+    { label: 'Site visits', value: view.complete ? formatNumber(view.totals.visits) : 'Unavailable', detail: view.complete && view.targets ? goalProgress(view.totals.visits, view.targets.visits) : 'Annual goal unavailable', metric: 'visits' }
   ];
-  $('kpis').innerHTML = cards.map((card, i) => `<article class="kpi-card"><div class="kpi-top"><span>${escape(card.label.toUpperCase())}</span><span class="kpi-icon kpi-icon-${i}" aria-hidden="true">${['✓', '▤', '↗', '◇'][i]}</span></div><div class="kpi-value">${escape(card.value)}</div><div class="kpi-goal">${escape(card.detail)}</div>${card.comparison ? `<div class="sla-comparison">${escape(card.comparison)}</div><div class="sla-cutoff">${escape(card.cutoff)}</div>` : ''}</article>`).join('');
+  
+  // Calculate status colors for cards
+  const cardStatuses = [
+    getStatusColor('sla', view.sla, view.slaTarget),
+    getStatusColor('completed', view.totals.completed, view.targets ? view.targets.completed : null),
+    'neutral', // requests assigned has no target
+    getStatusColor('visits', view.totals.visits, view.targets ? view.targets.visits : null)
+  ];
+  
+  $('kpis').innerHTML = cards.map((card, i) => {
+    const statusClass = cardStatuses[i] ? ` status-${cardStatuses[i]}` : '';
+    return `<article class="kpi-card${statusClass}"><div class="kpi-top"><span>${escape(card.label.toUpperCase())}</span><span class="kpi-icon kpi-icon-${i}" aria-hidden="true">${['✓', '▤', '↗', '◇'][i]}</span></div><div class="kpi-value">${escape(card.value)}</div><div class="kpi-goal">${escape(card.detail)}</div>${card.comparison ? `<div class="sla-comparison">${escape(card.comparison)}</div><div class="sla-cutoff">${escape(card.cutoff)}</div>` : ''}</article>`;
+  }).join('');
   renderTrend(market);
   renderInsights(view);
   renderMarkets(view);

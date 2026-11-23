@@ -124,3 +124,24 @@ export function formatMonth(value) {
   const [year, month] = value.split('-').map(Number);
   return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, 1)));
 }
+
+export function getStatusColor(metricName, value, target) {
+  if (value === null || value === 'Unavailable') return 'neutral';
+  
+  if (metricName === 'sla') {
+    // SLA: Green if >= target, Red if below
+    if (target === null) return 'neutral';
+    return value >= target ? 'green' : 'red';
+  }
+  
+  if (metricName === 'completed' || metricName === 'visits') {
+    // Progress toward goal: Green >= 75%, Yellow 50-74%, Red < 50%
+    if (target === null || target === 0) return 'neutral';
+    const progress = (value / target) * 100;
+    if (progress >= 75) return 'green';
+    if (progress >= 50) return 'yellow';
+    return 'red';
+  }
+  
+  return 'neutral';
+}
