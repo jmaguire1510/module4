@@ -47,6 +47,14 @@ function render() {
   $('period-pill').textContent = `YTD THROUGH ${data.coordinatorCutoff}`;
   $('coverage-warning').hidden = view.complete;
   $('coverage-warning').textContent = 'Coordinator records are missing for at least one selected market. Aggregate values are withheld.';
+  const issues = qualityIssues(data);
+  const dataCompletenessWarning = $('data-completeness-warning');
+  if (issues.length > 0) {
+    dataCompletenessWarning.hidden = false;
+    dataCompletenessWarning.innerHTML = `<strong>⚠ Data completeness alert:</strong> ${issues.length} ${issues.length === 1 ? 'issue' : 'issues'} found. The displayed data may be incomplete or inaccurate. <a href="#quality">Review data quality panel</a> for details.`;
+  } else {
+    dataCompletenessWarning.hidden = true;
+  }
   const cards = [
     slaCard(view, data.coordinatorCutoff),
     { label: 'Requests completed', value: view.complete ? formatNumber(view.totals.completed) : 'Unavailable', detail: view.complete && view.targets && view.totals.completed !== null ? goalProgress(view.totals.completed, view.targets.completed) : view.complete && view.targets && view.totals.completed === null ? 'Completed requests unavailable' : 'Annual goal unavailable' },
@@ -59,7 +67,6 @@ function render() {
   renderMarkets(view);
   renderMonthly(view);
   renderCoordinators(view);
-  const issues = qualityIssues(data);
   $('quality-count').textContent = `${issues.length} ${issues.length === 1 ? 'ISSUE' : 'ISSUES'}`;
   $('quality-list').innerHTML = issues.length ? issues.map(issue => `<div class="quality-item"><span>!</span><p>${escape(issue)}</p></div>`).join('') : '<p class="empty">No issues found by the available checks.</p>';
 }
