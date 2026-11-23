@@ -265,6 +265,18 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Existing CSS grid layout maintained; no additional styles needed
 - **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths
 
+### 2026-11-23 – PDF Export Right-Side Cutoff Fix
+- **Changed:** Print media CSS to prevent right-side content cutoff
+- **Files modified:** `public/styles.css`
+- **Details:**
+  - Added `overflow: hidden` to shell and content containers
+  - Added `width: 100%; box-sizing: border-box` to grid containers (kpi-grid, main-grid, bottom-grid, kpi-and-quality-row, table-wrap)
+  - Changed table layout from default to `table-layout: fixed` with `text-overflow: ellipsis` for long text values
+  - Added `overflow: hidden` to panel, chart, insight, definition-note, and source-details elements
+  - Added `overflow-wrap: break-word` to universal selector for better text wrapping
+  - Ensures all content fits within landscape page margins (0.5in on all sides)
+- **Result:** PDF exports now display complete page width without clipping right-side content
+
 ### 2026-11-23 – PDF Export Filename Date
 - **Changed:** PDF export now includes date in filename
 - **Files modified:** `public/service-app.js`
