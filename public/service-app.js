@@ -48,6 +48,33 @@ function render() {
   $('coverage-warning').hidden = view.complete;
   $('coverage-warning').textContent = 'Coordinator records are missing for at least one selected market. Aggregate values are withheld.';
   const issues = qualityIssues(data);
+  
+  // Display prominent banner with key data quality issues
+  const dataBanner = $('data-quality-banner');
+  if (issues.length > 0) {
+    dataBanner.hidden = false;
+    // Extract the most critical issues for the banner (first 3 or fewer)
+    const criticalIssues = issues.slice(0, 3);
+    const issuesHTML = criticalIssues.map(issue => {
+      // Strip the ⚠ prefix if present for cleaner display in banner
+      const cleanIssue = issue.startsWith('⚠ ') ? issue.substring(2) : issue;
+      return `<div class="banner-issue">${escape(cleanIssue)}</div>`;
+    }).join('');
+    
+    const moreIssuesNote = issues.length > 3 ? `<div class="banner-issue"><strong>${issues.length - 3} additional issue${issues.length - 3 === 1 ? '' : 's'} found.</strong> <a href="#quality">View all in data quality panel ↗</a></div>` : '';
+    
+    dataBanner.innerHTML = `
+      <div class="banner-title">Data quality alert</div>
+      <div class="banner-issues">
+        ${issuesHTML}
+        ${moreIssuesNote}
+      </div>
+      <div class="banner-details-link"><a href="#quality">Review data quality panel for full details ↗</a></div>
+    `;
+  } else {
+    dataBanner.hidden = true;
+  }
+  
   const dataCompletenessWarning = $('data-completeness-warning');
   if (issues.length > 0) {
     dataCompletenessWarning.hidden = false;
