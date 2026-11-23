@@ -116,7 +116,18 @@ function renderMarkets(view) {
 
 function renderMonthly(view) {
   const rows = data.monthly.filter(r => view.markets.includes(r.market));
-  $('monthly-table').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.record}</td><td>${escape(r.market)}</td><td>${escape(formatMonth(r.month))}</td><td>${formatNumber(r.received)}</td><td>${formatNumber(r.completed)}</td><td>${formatNumber(r.resolution)} h</td><td>${r.satisfaction === null ? 'Unavailable' : `${r.satisfaction}%`}</td><td>${r.sla === null ? 'Unavailable' : `${r.sla}%`}</td><td>${formatNumber(r.repeat)}</td></tr>`).join('') : '<tr><td colspan="9">No monthly records for this market.</td></tr>';
+  if (!rows.length) {
+    $('monthly-table').innerHTML = '<tr><td colspan="9">No monthly records for this market.</td></tr>';
+  } else {
+    $('monthly-table').innerHTML = rows.map(r => {
+      // Create plain-language callouts for missing data in each row
+      const monthDisplay = !r.month ? '[no month provided]' : escape(formatMonth(r.month));
+      const satisfactionDisplay = r.satisfaction === null ? '[no data]' : `${r.satisfaction}%`;
+      const slaDisplay = r.sla === null ? '[no data]' : `${r.sla}%`;
+      
+      return `<tr><td>${r.record}</td><td>${escape(r.market)}</td><td>${monthDisplay}</td><td>${formatNumber(r.received)}</td><td>${formatNumber(r.completed)}</td><td>${formatNumber(r.resolution)} h</td><td>${satisfactionDisplay}</td><td>${slaDisplay}</td><td>${formatNumber(r.repeat)}</td></tr>`;
+    }).join('');
+  }
 }
 
 function renderCoordinators(view) {

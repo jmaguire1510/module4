@@ -26,14 +26,41 @@ export function calculate(data, market) {
 
 export function qualityIssues(data) {
   const issues = [];
+  
+  // Month field completeness
   const undated = data.monthly.filter(row => !row.month);
-  if (undated.length) issues.push(`${undated.length} of ${data.monthly.length} monthly records have no month. Dates and trends cannot be inferred from row order.`);
-  for (const [key, label] of [['satisfaction', 'satisfaction'], ['sla', 'SLA']]) {
-    const missing = data.monthly.filter(row => row[key] === null);
-    if (missing.length) issues.push(`${missing.length} monthly ${label} value${missing.length === 1 ? ' is' : 's are'} missing (export record${missing.length === 1 ? '' : 's'} ${missing.map(row => row.record).join(', ')}).`);
+  if (undated.length === data.monthly.length) {
+    issues.push('⚠ no month provided — all monthly records are undated. Trends and time-series analysis cannot be performed. Restore month values to enable date-based analysis.');
+  } else if (undated.length) {
+    issues.push(`⚠ partial month data — ${undated.length} of ${data.monthly.length} monthly records have no month provided. Undated records cannot be charted or time-ordered. Dated records: ${data.monthly.filter(r => r.month).length}.`);
   }
+  
+  // Monthly satisfaction data
+  const missingSatisfaction = data.monthly.filter(row => row.satisfaction === null);
+  if (missingSatisfaction.length === data.monthly.length) {
+    issues.push('⚠ no satisfaction provided — all monthly satisfaction values are missing. Client satisfaction cannot be measured at the monthly level. Records affected: all 32.');
+  } else if (missingSatisfaction.length) {
+    const satisfactionRecords = missingSatisfaction.map(row => `${row.market} record ${row.record}`).join('; ');
+    issues.push(`⚠ partial satisfaction data — ${missingSatisfaction.length} of ${data.monthly.length} monthly records have no satisfaction provided. Affected: ${satisfactionRecords}.`);
+  }
+  
+  // Monthly SLA data
+  const missingSLA = data.monthly.filter(row => row.sla === null);
+  if (missingSLA.length === data.monthly.length) {
+    issues.push('⚠ no SLA provided — all monthly SLA values are missing. Monthly SLA compliance cannot be compared to coordinator-level SLA. Records affected: all 32.');
+  } else if (missingSLA.length) {
+    const slaRecords = missingSLA.map(row => `${row.market} record ${row.record}`).join('; ');
+    issues.push(`⚠ partial SLA data — ${missingSLA.length} of ${data.monthly.length} monthly records have no SLA provided. Affected: ${slaRecords}.`);
+  }
+  
+  // Coordinator completed counts
   const missingCompleted = data.coordinators.filter(row => row.completed === null);
-  if (missingCompleted.length) issues.push(`${missingCompleted.length} coordinator completed-request value${missingCompleted.length === 1 ? ' is' : 's are'} missing: ${missingCompleted.map(row => `${row.name} (${row.market})`).join(', ')}. Affected completed totals and SLA rates are unavailable.`);
+  if (missingCompleted.length) {
+    const coordinatorList = missingCompleted.map(row => `${row.name} (${row.market})`).join('; ');
+    issues.push(`⚠ no completed counts provided — ${missingCompleted.length} coordinator record${missingCompleted.length === 1 ? '' : 's'} missing completed-request data: ${coordinatorList}. Affected market SLA calculations and completed totals are unavailable.`);
+  }
+  
+  // Market coverage across data sources
   const groups = [
     ['monthly', new Set(data.monthly.map(r => r.market))],
     ['coordinator', new Set(data.coordinators.map(r => r.market))],
@@ -41,12 +68,23 @@ export function qualityIssues(data) {
   ];
   for (const [label, names] of groups) {
     const missing = marketsFor(data).filter(name => !names.has(name));
-    if (missing.length) issues.push(`Markets missing from ${label} data: ${missing.join(', ')}.`);
+    if (missing.length) {
+      const pluralMarket = missing.length === 1 ? 'market is' : 'markets are';
+      issues.push(`⚠ ${missing.length} ${pluralMarket} missing from ${label} data: ${missing.join(', ')}. This market may not be reflected in certain views or comparisons.`);
+    }
   }
-  if (!data.goalTotal) issues.push('2026 Goals has no TOTAL row to compare with market goals.');
-  else for (const key of ['completed', 'visits']) {
-    if (sum(data.goals, key) !== data.goalTotal[key]) issues.push(`2026 Goals ${key} TOTAL does not match the sum of market goals.`);
+  
+  // Goal TOTAL reconciliation
+  if (!data.goalTotal) {
+    issues.push('⚠ no TOTAL row in 2026 Goals — cannot verify that market goal totals match the stated annual target. Please add a TOTAL row for reconciliation.');
+  } else {
+    for (const key of ['completed', 'visits']) {
+      if (sum(data.goals, key) !== data.goalTotal[key]) {
+        issues.push(`⚠ 2026 Goals ${key === 'completed' ? 'completed requests' : 'site visits'} TOTAL mismatch — market goals sum to ${sum(data.goals, key)} but the TOTAL row shows ${data.goalTotal[key]}. Verify that all markets are included and figures are current.`);
+      }
+    }
   }
+  
   return issues;
 }
 
