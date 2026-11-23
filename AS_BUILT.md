@@ -265,6 +265,17 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Existing CSS grid layout maintained; no additional styles needed
 - **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths
 
+### 2026-11-23 – Report Date Moved to Top Right for PDF Inclusion
+- **Changed:** Repositioned report date to top right of content area
+- **Files modified:** `public/index.html`, `public/styles.css`
+- **Details:**
+  - Moved `report-date` element from sidebar to top of content area (above heading)
+  - Changed positioning: right-aligned, gray color (#647b92), 11px font
+  - Updated print CSS to maintain formatting in PDF exports
+  - Date now appears in top right corner of both dashboard and PDF exports
+  - Naturally included in print output without fixed positioning
+- **Result:** Date is now visible in top right of dashboard and PDF exports
+
 ### 2026-11-23 – Report Date Tucked Tighter Under Logo
 - **Changed:** Reduced spacing between date and logo
 - **Files modified:** `public/styles.css`
