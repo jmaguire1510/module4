@@ -239,3 +239,17 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
 8. **Monthly SLA Met (%) denominator:** Define how monthly SLA Met (%) should compare to coordinator-level completed-within-SLA ratio.
 9. **Market-level aggregation rules:** Confirm weighting for firm-wide metrics (e.g., should satisfaction use center manager feedback, client survey, or transaction-based data?).
 10. **Historical data retention:** Decide retention policy for monthly records once dates are restored; plan for data archival if records exceed a certain age.
+
+## Update Log
+
+### 2026-11-23 – KPI Status Legend Redesign
+- **Changed:** Status legend layout and styling
+- **Files modified:** `public/index.html`, `public/styles.css`
+- **Details:**
+  - Converted legend from table layout to flexbox horizontal single-line layout
+  - Reduced font size from 11px to 8px for compact presentation
+  - Set margin-top to 0 to tuck legend immediately below KPI cards
+  - Reduced gap between legend items from 16px to 12px
+  - Shortened text labels: "Green: Met", "Yellow: 50–74%", "Red: < 50%"
+  - Maintained color-coded indicators (green #2d7a3f, yellow #d9a926, red #c8453a)
+- **Result:** Compact, integrated legend providing immediate reference for KPI status colors without consuming dashboard space
