@@ -200,4 +200,7 @@ $('market-table').addEventListener('click', event => {
   render();
   $('overview').scrollIntoView({ behavior: 'smooth' });
 });
+const today = new Date();
+const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+$('report-date').textContent = dateStr;
 refresh();
