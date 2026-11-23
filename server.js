@@ -9,7 +9,7 @@ const files = {
   '/service-app.js': ['service-app.js', 'text/javascript; charset=utf-8'],
   '/service-metrics.js': ['service-metrics.js', 'text/javascript; charset=utf-8'],
   '/JOURNEY.md': ['JOURNEY.md', 'text/markdown; charset=utf-8'],
-  '/AS_BUILT.md': ['../AS_BUILT.md', 'text/markdown; charset=utf-8']
+  '/AS_BUILT.md': ['AS_BUILT.md', 'text/markdown; charset=utf-8']
 };
 const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
