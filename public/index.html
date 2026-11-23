@@ -51,6 +51,27 @@
             <div class="kpi-column">
               <div id="data-completeness-warning" class="inline-warning" hidden></div>
               <div id="kpis" class="kpi-grid"></div>
+              <table class="kpi-legend">
+                <thead>
+                  <tr>
+                    <th colspan="2">Status Legend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="legend-cell legend-green">●</td>
+                    <td class="legend-text"><strong>Green:</strong> Target met or exceeded</td>
+                  </tr>
+                  <tr>
+                    <td class="legend-cell legend-yellow">●</td>
+                    <td class="legend-text"><strong>Yellow:</strong> Needs attention (50–74% progress)</td>
+                  </tr>
+                  <tr>
+                    <td class="legend-cell legend-red">●</td>
+                    <td class="legend-text"><strong>Red:</strong> Target not met (< 50% progress)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="quality-column">
               <div id="data-quality-banner" class="data-quality-banner" hidden role="alert" aria-live="assertive"></div>
