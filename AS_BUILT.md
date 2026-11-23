@@ -264,3 +264,13 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Responsive design: two-column layout on desktop (> 760px), single column on mobile (< 760px)
   - Existing CSS grid layout maintained; no additional styles needed
 - **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths
+
+### 2026-11-23 – PDF Export Filename Date
+- **Changed:** PDF export now includes date in filename
+- **Files modified:** `public/service-app.js`
+- **Details:**
+  - When "Save PDF" button is clicked, document title is updated to `Morrowlane-Performance-YYYY-MM-DD`
+  - Browser print dialog uses this title as the default PDF filename
+  - Original page title is restored after print dialog closes
+  - Date format: ISO 8601 (YYYY-MM-DD)
+- **Result:** Exported PDF files are automatically named with the export date (e.g., `Morrowlane-Performance-2026-11-23.pdf`)

@@ -176,7 +176,19 @@ function renderCoordinators(view) {
 
 $('refresh').addEventListener('click', refresh);
 $('pdf-snapshot').addEventListener('click', () => {
+  // Add date to window title for PDF export
+  const originalTitle = document.title;
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+  document.title = `Morrowlane-Performance-${dateStr}`;
+  
+  // Trigger print dialog
   window.print();
+  
+  // Restore original title after print
+  setTimeout(() => {
+    document.title = originalTitle;
+  }, 500);
 });
 $('market').addEventListener('change', render);
 $('market-sort').addEventListener('change', render);
