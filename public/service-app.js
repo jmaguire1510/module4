@@ -1,4 +1,4 @@
-import { calculate, formatMonth, formatNumber, formatPercent, marketsFor, qualityIssues, ratio } from './service-metrics.js';
+import { calculate, formatMonth, formatNumber, formatPercent, marketsFor, qualityIssues, ratio, slaCard } from './service-metrics.js';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -48,12 +48,12 @@ function render() {
   $('coverage-warning').hidden = view.complete;
   $('coverage-warning').textContent = 'Coordinator records are missing for at least one selected market. Aggregate values are withheld.';
   const cards = [
-    { label: 'Completed within SLA', value: view.sla === null ? 'Unavailable' : formatPercent(view.sla), detail: view.complete ? `${formatNumber(view.totals.withinSla)} of ${formatNumber(view.totals.completed)} completed · ${view.slaTarget === null ? 'target unavailable' : `${view.slaTarget}% SLA target`}` : 'Missing market coverage' },
-    { label: 'Requests completed', value: view.complete ? formatNumber(view.totals.completed) : 'Unavailable', detail: view.complete && view.targets ? goalProgress(view.totals.completed, view.targets.completed) : 'Annual goal unavailable' },
+    slaCard(view, data.coordinatorCutoff),
+    { label: 'Requests completed', value: view.complete ? formatNumber(view.totals.completed) : 'Unavailable', detail: view.complete && view.targets && view.totals.completed !== null ? goalProgress(view.totals.completed, view.targets.completed) : view.complete && view.targets && view.totals.completed === null ? 'Completed requests unavailable' : 'Annual goal unavailable' },
     { label: 'Requests assigned', value: view.complete ? formatNumber(view.totals.assigned) : 'Unavailable', detail: 'Coordinator YTD assignments' },
     { label: 'Site visits', value: view.complete ? formatNumber(view.totals.visits) : 'Unavailable', detail: view.complete && view.targets ? goalProgress(view.totals.visits, view.targets.visits) : 'Annual goal unavailable' }
   ];
-  $('kpis').innerHTML = cards.map((card, i) => `<article class="kpi-card"><div class="kpi-top"><span>${escape(card.label.toUpperCase())}</span><span class="kpi-icon kpi-icon-${i}" aria-hidden="true">${['✓', '▤', '↗', '◇'][i]}</span></div><div class="kpi-value">${escape(card.value)}</div><div class="kpi-goal">${escape(card.detail)}</div></article>`).join('');
+  $('kpis').innerHTML = cards.map((card, i) => `<article class="kpi-card"><div class="kpi-top"><span>${escape(card.label.toUpperCase())}</span><span class="kpi-icon kpi-icon-${i}" aria-hidden="true">${['✓', '▤', '↗', '◇'][i]}</span></div><div class="kpi-value">${escape(card.value)}</div><div class="kpi-goal">${escape(card.detail)}</div>${card.comparison ? `<div class="sla-comparison">${escape(card.comparison)}</div><div class="sla-cutoff">${escape(card.cutoff)}</div>` : ''}</article>`).join('');
   renderTrend(market);
   renderInsights(view);
   renderMarkets(view);
@@ -99,7 +99,7 @@ function renderInsights(view) {
 function renderMarkets(view) {
   const marketViews = view.markets.map(market => ({ market, ...calculate(data, market) }));
   if ($('market-sort').value === 'sla') marketViews.sort((a, b) => a.sla === null ? (b.sla === null ? a.market.localeCompare(b.market) : 1) : b.sla === null ? -1 : a.sla - b.sla || a.market.localeCompare(b.market));
-  $('market-table').innerHTML = marketViews.map(v => `<tr><td><button type="button" class="center-button" data-market="${escape(v.market)}">${escape(v.market)} <span>↗</span></button></td><td class="table-strong">${v.complete ? formatNumber(v.totals.completed) : 'Unavailable'}</td><td>${v.complete && v.targets ? escape(goalProgress(v.totals.completed, v.targets.completed)) : 'Unavailable'}</td><td>${formatPercent(v.sla)}</td><td>${v.slaTarget === null ? 'Unavailable' : `${v.slaTarget}%`}</td><td>${v.complete ? formatNumber(v.totals.assigned) : 'Unavailable'}</td><td>${v.complete ? formatNumber(v.totals.visits) : 'Unavailable'}</td></tr>`).join('');
+  $('market-table').innerHTML = marketViews.map(v => `<tr><td><button type="button" class="center-button" data-market="${escape(v.market)}">${escape(v.market)} <span>↗</span></button></td><td class="table-strong">${v.complete ? formatNumber(v.totals.completed) : 'Unavailable'}</td><td>${v.complete && v.targets && v.totals.completed !== null ? escape(goalProgress(v.totals.completed, v.targets.completed)) : 'Unavailable'}</td><td>${formatPercent(v.sla)}</td><td>${v.slaTarget === null ? 'Unavailable' : `${v.slaTarget}%`}</td><td>${v.complete ? formatNumber(v.totals.assigned) : 'Unavailable'}</td><td>${v.complete ? formatNumber(v.totals.visits) : 'Unavailable'}</td></tr>`).join('');
   const goals = data.goals.filter(g => view.markets.includes(g.market));
   const target = value => value === null ? 'unavailable' : `${value}%`;
   $('target-context').textContent = data.coordinatorCutoff.startsWith('2026-') && goals.length

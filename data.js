@@ -93,7 +93,7 @@ export function normalizeSources({ monthlyCSV, coordinatorCSV, goalsCSV, coordin
   const coordinators = table(coordinatorCSV, COORDINATOR_HEADERS, 'Coordinator Activity').map(r => ({
     market: required(r[0], 'Coordinator market'), name: required(r[1], 'Coordinator name'),
     assigned: number(r[2], 'Coordinator assigned', { integer: true }),
-    completed: number(r[3], 'Coordinator completed', { integer: true }),
+    completed: number(r[3], 'Coordinator completed', { nullable: true, integer: true }),
     completedGoal: number(r[4], 'Coordinator completed goal', { integer: true }),
     withinSla: number(r[5], 'Coordinator within SLA', { integer: true }),
     visits: number(r[6], 'Coordinator visits', { integer: true }),
@@ -103,7 +103,7 @@ export function normalizeSources({ monthlyCSV, coordinatorCSV, goalsCSV, coordin
     slaGoal: number(r[10], 'Coordinator SLA target', { nullable: true, percent: true }),
     satisfactionGoal: number(r[11], 'Coordinator satisfaction target', { nullable: true, percent: true })
   }));
-  for (const r of coordinators) if (r.withinSla > r.completed) throw new Error(`Coordinator Activity: completed within SLA exceeds completed for ${r.name}`);
+  for (const r of coordinators) if (r.completed !== null && r.withinSla > r.completed) throw new Error(`Coordinator Activity: completed within SLA exceeds completed for ${r.name}`);
   const goalRows = table(goalsCSV, GOAL_HEADERS, '2026 Goals').map(r => ({
     sourceMarket: required(r[0], 'Goal market'), market: r[0] === 'Mpls.' ? 'Minneapolis' : r[0],
     completed: number(r[1], 'Goal completed requests', { integer: true }),
