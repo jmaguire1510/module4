@@ -159,6 +159,20 @@ Before building, we applied four critical questions to ensure data quality:
 - **Testing:** Node.js built-in test runner
 - **Security:** CSP headers, loopback binding for local server
 
+## Recent Changes (November 23, 2026)
+
+### KPI Status Legend Redesign
+- Converted legend from table layout to compact single-line flexbox layout
+- Reduced font size to 8px and removed margin for tight integration below KPI cards
+- Shortened labels: "Green: Met", "Yellow: 50–74%", "Red: < 50%"
+- Maintains color-coded indicators for visual reference
+
+### Leadership Focus Panel Repositioned
+- Moved Leadership focus panel to right-side two-column layout alongside Market performance table
+- Improves information density: leadership priorities now visible alongside market data
+- Responsive design: two-column on desktop (> 760px), single column on mobile
+- No CSS changes needed; restructured HTML to leverage existing grid layout
+
 ## Data Sources
 
 - **Primary workbook:** [Morrowlane Workplace Solutions - Performance Data](https://docs.google.com/spreadsheets/d/1FOrhcgDGuPIgQowaoYeDS3izkK2-2DaFmNRkTSpF1es/edit?gid=1731940043#gid=1731940043)
@@ -177,6 +191,6 @@ Before building, we applied four critical questions to ensure data quality:
 
 ---
 
-**Last Updated:** November 23, 2026 at 1:50 PM ET  
+**Last Updated:** November 23, 2026 at 3:24 PM ET  
 **Repository:** [jmaguire1510/module4](https://github.com/jmaguire1510/module4)  
 **Live Site:** https://jmaguiremodule4.netlify.app/

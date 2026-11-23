@@ -8,6 +8,8 @@ Checked 23 November 2026 against the live public workbook and local site.
 - Denver export record 17 contains 82 received, 75 completed and 39-hour resolution with no month; the source drill-down displayed those values without assigning a date.
 - Live browser checks covered the market filter, market drill-down, SLA sorting, raw-record details and refresh. A simulated response with two dated Denver records produced the expected request and resolution charts, with the remaining undated records omitted. A simulated source error hid the dashboard and displayed the error. Automated tests cover invalid data, missing dates, zero denominators, weighted SLA and refresh behavior.
 - Monthly data has one missing satisfaction and one missing SLA value. Its dates and denominators prevent reliable reconciliation with the leadership YTD figure. The director's September narrative is identified as a dated report rather than a live trend.
+- KPI status legend displays color-coded status indicators (Green: Met, Yellow: 50–74%, Red: < 50%) in compact single-line format below KPI cards.
+- Leadership focus panel displays on right side alongside Market performance table in two-column layout (desktop) with responsive single-column fallback (mobile).
 
 ## Remaining work
 
