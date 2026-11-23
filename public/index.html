@@ -40,16 +40,22 @@
           </div>
         </div>
         <div id="status" class="status loading" role="status" aria-live="polite">Connecting to the source workbook…</div>
-        <div id="data-quality-banner" class="data-quality-banner" hidden role="alert" aria-live="assertive"></div>
         <div id="dashboard" hidden>
           <div class="filter-bar">
             <div class="filter-title"><span class="filter-icon">▤</span><div><strong>Reporting view</strong><small>Coordinator YTD data with market drill-down</small></div></div>
             <div class="filter-controls"><label>MARKET<select id="market"></select></label></div>
           </div>
           <div class="section-heading"><div><div class="eyebrow">THE BIG PICTURE</div><h2>Performance at a glance</h2><p id="kpi-context"></p><p>SLA = completed within SLA ÷ completed requests. Annual goal progress is not a time-phased forecast.</p></div><span class="period-pill" id="period-pill"></span></div>
-          <div id="data-completeness-warning" class="inline-warning" hidden></div>
-          <div id="kpis" class="kpi-grid"></div>
           <div id="coverage-warning" class="inline-warning" hidden></div>
+          <div class="kpi-and-quality-row">
+            <div class="kpi-column">
+              <div id="data-completeness-warning" class="inline-warning" hidden></div>
+              <div id="kpis" class="kpi-grid"></div>
+            </div>
+            <div class="quality-column">
+              <div id="data-quality-banner" class="data-quality-banner" hidden role="alert" aria-live="assertive"></div>
+            </div>
+          </div>
           <div class="main-grid">
             <section class="panel trend-panel" aria-labelledby="trend-title">
               <div class="panel-head"><div><div class="eyebrow">MONTHLY TREND</div><h2 id="trend-title">Service trends</h2><p>Monthly Performance worksheet · select one market</p></div><label class="sort-control">MEASURE<select id="trend-metric"><option value="received">Requests received</option><option value="resolution">Resolution time</option></select></label></div>
