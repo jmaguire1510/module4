@@ -39,31 +39,31 @@ main{min-width:0;flex:1}.topbar{height:65px;background:#fff;border-bottom:1px so
 .sort-control{font-size:8px;letter-spacing:1px;color:#60788f;font-weight:700;white-space:nowrap}.sort-control select{display:block;background:#f8fbfe;border:1px solid #dce6f0;border-radius:4px;color:#2d4b69;padding:8px;margin-top:5px;font-size:11px;letter-spacing:normal}
 @media print{
   @page{size:landscape;margin:0.5in;orphans:1;widows:1}
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; overflow-wrap: break-word !important; }
   html, body { margin:0 !important; padding:0 !important; }
   .sidebar,.topbar,.refresh,.filter-bar,.sort-control{display:none}
-  .shell{display:block;min-height:0}main,.content{width:100%;max-width:100%;padding:0.3in;margin:0}
+  .shell{display:block;min-height:0;overflow:hidden}main,.content{width:100%;max-width:100%;padding:0.3in;margin:0;overflow:hidden}
   .heading-row{margin-bottom:8px;display:flex;flex-direction:column}.status{margin-bottom:0;display:none}
-  .kpi-grid{grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
-  .kpi-card{padding:8px 10px;min-height:auto}.kpi-value{font-size:20px;margin:6px 0}
+  .kpi-grid{grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0;width:100%;box-sizing:border-box}
+  .kpi-card{padding:8px 10px;min-height:auto;overflow:hidden}.kpi-value{font-size:20px;margin:6px 0}
   .kpi-top{font-size:7px}.kpi-goal{font-size:9px}.sla-comparison{font-size:9px;margin-top:4px}
-  .main-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:8px;margin:8px 0}
-  .bottom-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:8px}
-  .panel{padding:8px;margin:0;page-break-inside:avoid}.panel-head{gap:6px;margin-bottom:6px}
+  .main-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:8px;margin:8px 0;width:100%;box-sizing:border-box}
+  .bottom-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:8px;width:100%;box-sizing:border-box}
+  .panel{padding:8px;margin:0;page-break-inside:avoid;overflow:hidden;min-width:0}.panel-head{gap:6px;margin-bottom:6px}
   .panel h2{font-size:14px;margin:0}.panel-head p{font-size:8px;margin:0}
-  .chart{margin:8px 0;min-height:120px}.chart svg{max-height:150px;width:100%}
-  .chart-footer{padding-top:4px;font-size:8px}.insight{padding:6px 0;gap:8px}
-  .insight-icon{width:24px;height:24px;font-size:12px}.insight p{font-size:9px;line-height:1.4;margin-top:2px}
-  .table-wrap{overflow:visible;margin:6px 0}
-  table{font-size:7px;border-collapse:collapse}th{padding:3px 2px;font-size:6px}td{padding:3px 2px}
+  .chart{margin:8px 0;min-height:120px;width:100%;overflow:hidden}.chart svg{max-height:150px;width:100%;overflow:visible}
+  .chart-footer{padding-top:4px;font-size:8px}.insight{padding:6px 0;gap:8px;overflow:hidden}
+  .insight-icon{width:24px;height:24px;font-size:12px;flex-shrink:0}.insight p{font-size:9px;line-height:1.4;margin-top:2px}
+  .table-wrap{overflow:visible;margin:6px 0;width:100%;box-sizing:border-box}
+  table{font-size:7px;border-collapse:collapse;width:100%;table-layout:fixed}th{padding:3px 2px;font-size:6px}td{padding:3px 2px;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
   .table-strong{font-size:8px}td small{font-size:6px}
-  .data-quality-banner{margin-bottom:8px;padding:8px 10px;font-size:11px;line-height:1.4}
-  .kpi-and-quality-row{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin:0}
+  .data-quality-banner{margin-bottom:8px;padding:8px 10px;font-size:11px;line-height:1.4;overflow:hidden}
+  .kpi-and-quality-row{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin:0;width:100%;box-sizing:border-box}
   .data-quality-banner .banner-title{font-size:12px;margin-bottom:4px}
   .data-quality-banner .banner-issue{margin-bottom:4px;font-size:9px}
-  .definition-note{margin-top:8px;padding:6px;font-size:8px}
+  .definition-note{margin-top:8px;padding:6px;font-size:8px;overflow:hidden}
   .target-context{font-size:8px;margin:6px 0}
-  .source-details{margin-top:8px;page-break-inside:avoid}
+  .source-details{margin-top:8px;page-break-inside:avoid;overflow:hidden}
   .source-details summary{font-size:9px}
   .source-details p{font-size:8px;margin-top:4px}
   footer{margin-top:12px;font-size:7px;padding:4px 0}
