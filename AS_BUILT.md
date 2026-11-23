@@ -265,6 +265,14 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Existing CSS grid layout maintained; no additional styles needed
 - **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths
 
+### 2026-11-23 – Report Date Centered Under Logo
+- **Changed:** Centered the report date under Morrowlane logo
+- **Files modified:** `public/styles.css`
+- **Details:**
+  - Added `text-align: center` to `.report-date` styling
+  - Date now displays centered and aligned with logo
+- **Result:** More polished appearance with centered date display
+
 ### 2026-11-23 – Report Date Added to Sidebar and PDF
 - **Changed:** Added report date display under Morrowlane logo
 - **Files modified:** `public/index.html`, `public/service-app.js`, `public/styles.css`
