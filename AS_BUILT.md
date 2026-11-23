@@ -253,3 +253,14 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Shortened text labels: "Green: Met", "Yellow: 50–74%", "Red: < 50%"
   - Maintained color-coded indicators (green #2d7a3f, yellow #d9a926, red #c8453a)
 - **Result:** Compact, integrated legend providing immediate reference for KPI status colors without consuming dashboard space
+
+### 2026-11-23 – Leadership Focus Panel Repositioned
+- **Changed:** Dashboard layout to display Leadership focus alongside Market performance
+- **Files modified:** `public/index.html`
+- **Details:**
+  - Moved "Leadership focus" panel from standalone `main-grid` div into two-column `main-grid` layout
+  - Market performance table now displays on left (1.8fr width)
+  - Leadership focus panel now displays on right (1fr width)
+  - Responsive design: two-column layout on desktop (> 760px), single column on mobile (< 760px)
+  - Existing CSS grid layout maintained; no additional styles needed
+- **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths

@@ -71,17 +71,17 @@
             </div>
           </div>
           <div class="main-grid">
+            <section class="panel table-panel" id="performance">
+              <div class="panel-head"><div><div class="eyebrow">THE DETAILS</div><h2>Market performance</h2><p>Coordinator Activity YTD. Select a market to drill in.</p></div><label class="sort-control">SORT BY<select id="market-sort"><option value="name">Market name</option><option value="sla">SLA, low to high</option></select></label></div>
+              <div class="table-wrap"><table><thead><tr><th>MARKET</th><th>COMPLETED</th><th>ANNUAL GOAL</th><th>WITHIN SLA</th><th>SLA TARGET</th><th>ASSIGNED</th><th>SITE VISITS</th></tr></thead><tbody id="market-table"></tbody></table></div>
+              <p id="target-context" class="target-context"></p>
+              <details class="source-details"><summary>View monthly source records</summary><p>Export record numbers are identifiers only, not dates. Missing source values are unavailable.</p><div class="table-wrap"><table><thead><tr><th>RECORD</th><th>MARKET</th><th>MONTH</th><th>RECEIVED</th><th>COMPLETED</th><th>RESOLUTION</th><th>SATISFACTION</th><th>SLA MET</th><th>REPEAT ISSUES</th></tr></thead><tbody id="monthly-table"></tbody></table></div></details>
+            </section>
             <section class="panel insights-panel" aria-labelledby="attention-title">
               <div class="panel-head"><div><div class="eyebrow">WHAT TO KNOW</div><h2 id="attention-title">Leadership focus</h2><p>Source targets and the September priorities</p></div><span class="spark">✳</span></div>
               <div id="insights"></div>
             </section>
           </div>
-          <section class="panel table-panel" id="performance">
-            <div class="panel-head"><div><div class="eyebrow">THE DETAILS</div><h2>Market performance</h2><p>Coordinator Activity YTD. Select a market to drill in.</p></div><label class="sort-control">SORT BY<select id="market-sort"><option value="name">Market name</option><option value="sla">SLA, low to high</option></select></label></div>
-            <div class="table-wrap"><table><thead><tr><th>MARKET</th><th>COMPLETED</th><th>ANNUAL GOAL</th><th>WITHIN SLA</th><th>SLA TARGET</th><th>ASSIGNED</th><th>SITE VISITS</th></tr></thead><tbody id="market-table"></tbody></table></div>
-            <p id="target-context" class="target-context"></p>
-            <details class="source-details"><summary>View monthly source records</summary><p>Export record numbers are identifiers only, not dates. Missing source values are unavailable.</p><div class="table-wrap"><table><thead><tr><th>RECORD</th><th>MARKET</th><th>MONTH</th><th>RECEIVED</th><th>COMPLETED</th><th>RESOLUTION</th><th>SATISFACTION</th><th>SLA MET</th><th>REPEAT ISSUES</th></tr></thead><tbody id="monthly-table"></tbody></table></div></details>
-          </section>
           <div class="bottom-grid">
             <section class="panel table-panel" id="coordinators">
               <div class="panel-head"><div><div class="eyebrow">PEOPLE &amp; DELIVERY</div><h2>Coordinator activity</h2><p id="coordinator-context"></p></div><span class="panel-tag">SOURCE YTD</span></div>
