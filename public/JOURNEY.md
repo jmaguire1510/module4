@@ -104,6 +104,52 @@ Before building, we applied four critical questions to ensure data quality:
 6. **Time-phasing review** — Determine if pace-to-target metrics are appropriate
 7. **Legacy cleanup** — Remove DATA_DICTIONARY.md historical section and unused scripts
 
+### Phase 5: Smart Data Quality Callouts (November 23, 2026)
+
+**Requirement:** Make missing data issues immediately visible with plain-language callouts
+
+**Implementation:**
+- Prominent yellow banner appears at top of dashboard when issues detected
+- Shows top 3 critical issues by default; "+ N additional issues" link to view all
+- Inline callouts in monthly table: "[no month provided]", "[no data]"
+- Messages are specific: "Denver record 20" identifies affected rows
+- Explains business impact: "Trends and time-series analysis cannot be performed"
+
+**Features:**
+- Banner positioned right after page title for immediate visibility
+- Semantic HTML with `role="alert"` and `aria-live="assertive"` for accessibility
+- CSP-compliant styling (no inline styles)
+- Plain-language messages: "no month provided — all monthly records are undated..."
+- Actionable: Link to full Data Quality panel for complete details
+
+**Verification:**
+- All 12 tests passing (no regressions)
+- Banner displays correctly with proper styling
+- Messages are specific and contextual
+
+### Phase 6: PDF Export Button (November 23, 2026)
+
+**Requirement:** Add button to save PDF snapshot of dashboard
+
+**Implementation:**
+- "💾 Save PDF" button in header next to "Refresh data" button
+- Grouped in `.button-group` container for clean layout
+- Triggers browser's native print dialog on click
+- User selects "Save as PDF" and chooses save location
+- Respects existing print CSS media queries for optimal layout
+
+**Features:**
+- Works in all modern browsers (Chrome, Edge, Firefox, Safari)
+- Preserves current state: selected market, filters, all visible data
+- Includes data quality alerts and warnings in PDF
+- No external dependencies; uses `window.print()`
+
+**Verification:**
+- All 12 tests passing
+- Button verified in HTML with correct ID and styling
+- Event listener verified in JavaScript
+- Responsive layout maintained
+
 ## Technical Stack
 
 - **Runtime:** Node.js 20+
@@ -126,9 +172,11 @@ Before building, we applied four critical questions to ensure data quality:
 - **Missing dates:** Data withheld, not inferred from row order
 - **Legacy code:** Unused Canyon & Coast scripts retained to avoid unintended side effects
 - **Public deployment:** Fictional data suitable for public hosting; real data requires auth layer
+- **Data quality visibility:** Prominent banner makes issues discoverable without scrolling
+- **PDF export:** Native print functionality preserves state and styling
 
 ---
 
-**Last Updated:** November 23, 2026 at 11:20 AM ET  
+**Last Updated:** November 23, 2026 at 1:50 PM ET  
 **Repository:** [jmaguire1510/module4](https://github.com/jmaguire1510/module4)  
 **Live Site:** https://jmaguiremodule4.netlify.app/

@@ -163,6 +163,9 @@ function renderCoordinators(view) {
 }
 
 $('refresh').addEventListener('click', refresh);
+$('pdf-snapshot').addEventListener('click', () => {
+  window.print();
+});
 $('market').addEventListener('change', render);
 $('market-sort').addEventListener('change', render);
 $('trend-metric').addEventListener('change', render);
