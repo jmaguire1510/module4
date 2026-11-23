@@ -265,6 +265,19 @@ Red/yellow/green thresholds not invented beyond "above/below target" for SLA.
   - Existing CSS grid layout maintained; no additional styles needed
 - **Result:** More efficient use of dashboard space; leadership priorities now visible alongside market data at desktop widths
 
+### 2026-11-23 – Report Date Added to Sidebar and PDF
+- **Changed:** Added report date display under Morrowlane logo
+- **Files modified:** `public/index.html`, `public/service-app.js`, `public/styles.css`
+- **Details:**
+  - Added `report-date` div element to sidebar under brand logo in HTML
+  - Added CSS styling: light blue color (#8db5d9), 10px font, 12px top margin
+  - Added JavaScript to populate with today's date in 'Mon DD, YYYY' format (e.g., "Nov 23, 2026")
+  - Added print CSS to display date in top-left corner of PDF export (0.5in from top/left)
+  - Date automatically updates to current day each time page loads
+  - On desktop: displays in sidebar under logo
+  - On PDF: displays as fixed position label in top-left corner
+- **Result:** Report date now visible at top-left of both dashboard and PDF exports
+
 ### 2026-11-23 – PDF Export Right-Side Cutoff Fix
 - **Changed:** Print media CSS to prevent right-side content cutoff
 - **Files modified:** `public/styles.css`
