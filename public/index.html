@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Service performance monitoring for Morrowlane Workplace Solutions operations leadership.">
+  <title>Service performance monitor | Morrowlane</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/service-app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Morrowlane service performance monitor">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>MORROWLANE<small>WORKPLACE SOLUTIONS</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav aria-label="Dashboard navigation">
+        <a class="nav-link active" href="#overview"><span aria-hidden="true">▦</span> Executive overview</a>
+        <a class="nav-link" href="#performance"><span aria-hidden="true">◫</span> Market performance</a>
+        <a class="nav-link" href="#coordinators"><span aria-hidden="true">♙</span> Coordinator activity</a>
+        <a class="nav-link" href="#quality"><span aria-hidden="true">◇</span> Data quality</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-divider"></div>
+        <div class="sidebar-caption">LEADERSHIP PORTAL</div>
+        <p>Clarity for better decisions.</p>
+        <a class="source-link" href="https://docs.google.com/spreadsheets/d/1FOrhcgDGuPIgQowaoYeDS3izkK2-2DaFmNRkTSpF1es/edit?gid=1731940043#gid=1731940043" target="_blank" rel="noopener noreferrer">Open source workbook ↗</a>
+      </div>
+    </aside>
+    <main>
+      <header class="topbar"><div>OPERATIONS <span>/</span> <strong>SERVICE PERFORMANCE</strong></div><div class="top-right"><span class="live-dot"></span> SOURCE MONITORING</div></header>
+      <div class="content" id="overview">
+        <div class="heading-row">
+          <div><div class="eyebrow"><span></span> SERVICE INTELLIGENCE</div><h1>Service performance<span>.</span></h1><p class="subtitle">Helping operations leadership compare markets and identify service priorities.</p></div>
+          <button id="refresh" class="refresh" type="button"><span aria-hidden="true">↻</span> Refresh data</button>
+        </div>
+        <div id="status" class="status loading" role="status" aria-live="polite">Connecting to the source workbook…</div>
+        <div id="dashboard" hidden>
+          <div class="filter-bar">
+            <div class="filter-title"><span class="filter-icon">▤</span><div><strong>Reporting view</strong><small>Coordinator YTD data with market drill-down</small></div></div>
+            <div class="filter-controls"><label>MARKET<select id="market"></select></label></div>
+          </div>
+          <div class="section-heading"><div><div class="eyebrow">THE BIG PICTURE</div><h2>Performance at a glance</h2><p id="kpi-context"></p><p>SLA = completed within SLA ÷ completed requests. Annual goal progress is not a time-phased forecast.</p></div><span class="period-pill" id="period-pill"></span></div>
+          <div id="kpis" class="kpi-grid"></div>
+          <div id="coverage-warning" class="inline-warning" hidden></div>
+          <div class="main-grid">
+            <section class="panel trend-panel" aria-labelledby="trend-title">
+              <div class="panel-head"><div><div class="eyebrow">MONTHLY TREND</div><h2 id="trend-title">Service trends</h2><p>Monthly Performance worksheet · select one market</p></div><label class="sort-control">MEASURE<select id="trend-metric"><option value="received">Requests received</option><option value="resolution">Resolution time</option></select></label></div>
+              <div id="chart" class="chart"></div>
+              <div class="chart-footer"><span><i></i> Monthly source records</span><span id="trend-note"></span></div>
+            </section>
+            <section class="panel insights-panel" aria-labelledby="attention-title">
+              <div class="panel-head"><div><div class="eyebrow">WHAT TO KNOW</div><h2 id="attention-title">Leadership focus</h2><p>Source targets and the September priorities</p></div><span class="spark">✳</span></div>
+              <div id="insights"></div>
+            </section>
+          </div>
+          <section class="panel table-panel" id="performance">
+            <div class="panel-head"><div><div class="eyebrow">THE DETAILS</div><h2>Market performance</h2><p>Coordinator Activity YTD. Select a market to drill in.</p></div><label class="sort-control">SORT BY<select id="market-sort"><option value="name">Market name</option><option value="sla">SLA, low to high</option></select></label></div>
+            <div class="table-wrap"><table><thead><tr><th>MARKET</th><th>COMPLETED</th><th>ANNUAL GOAL</th><th>WITHIN SLA</th><th>SLA TARGET</th><th>ASSIGNED</th><th>SITE VISITS</th></tr></thead><tbody id="market-table"></tbody></table></div>
+            <p id="target-context" class="target-context"></p>
+            <details class="source-details"><summary>View monthly source records</summary><p>Export record numbers are identifiers only, not dates. Missing source values are unavailable.</p><div class="table-wrap"><table><thead><tr><th>RECORD</th><th>MARKET</th><th>MONTH</th><th>RECEIVED</th><th>COMPLETED</th><th>RESOLUTION</th><th>SATISFACTION</th><th>SLA MET</th><th>REPEAT ISSUES</th></tr></thead><tbody id="monthly-table"></tbody></table></div></details>
+          </section>
+          <div class="bottom-grid">
+            <section class="panel table-panel" id="coordinators">
+              <div class="panel-head"><div><div class="eyebrow">PEOPLE &amp; DELIVERY</div><h2>Coordinator activity</h2><p id="coordinator-context"></p></div><span class="panel-tag">SOURCE YTD</span></div>
+              <div class="table-wrap"><table><thead><tr><th>COORDINATOR / MARKET</th><th>ASSIGNED</th><th>COMPLETED</th><th>WITHIN SLA</th><th>RESOLUTION</th><th>SATISFACTION</th><th>SITE VISITS</th></tr></thead><tbody id="coordinator-table"></tbody></table></div>
+            </section>
+            <section class="panel quality-panel" id="quality">
+              <div class="panel-head"><div><div class="eyebrow">TRUST THE NUMBERS</div><h2>Data quality</h2><p>Workbook-wide checks and reconciliation</p></div><span id="quality-count" class="quality-count"></span></div>
+              <div id="quality-list"></div>
+              <div class="definition-note"><strong>Definitions matter</strong><p>The director's 93% is completed within SLA divided by completed requests in the coordinator log. It is not requests completed divided by assigned. The separate 92% completion-rate target has an unspecified denominator.</p><p>Monthly SLA percentages have an undocumented denominator and cannot yet be reliably reconciled with coordinator YTD SLA.</p></div>
+            </section>
+          </div>
+          <footer><span>MORROWLANE <b> / </b> SERVICE PERFORMANCE</span><span>Source: Google Sheets · <a href="https://docs.google.com/spreadsheets/d/1FOrhcgDGuPIgQowaoYeDS3izkK2-2DaFmNRkTSpF1es/edit?gid=1731940043#gid=1731940043" target="_blank" rel="noopener noreferrer">View workbook ↗</a></span></footer>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
